@@ -440,7 +440,7 @@ W_n = \begin{cases} 1 &amp; \text{with probability} &amp; \lambda \\ 0 &amp; \te
 \[
 \hat\lambda = \frac{w}{w+l}.
 \]</div>
-<p>e.g., 40% for 4 wins and 6 losses. But what if we observe a small number of games, and the ratio between <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(l\)</span> is extreme? We don’t presume that after we watch a player win one game that they are likely to win the rest. Instead, we assume that their skill parameter is likely close to average, perhaps a bit higher based on the result we just witnessed. So we would like to formalize that idea. Bayes suggests that instead of having a fixed parameter representing our knowledge of their skills, we instead choose a <em>prior distribution</em>, that is, create a random variable that represents our model of their skill, and update the distribution of that variable when we make observations. But how do we choose our prior? Let’s not. Let’s just suppose that <span class="math notranslate nohighlight">\(\Lambda\)</span> (now capitalized because it’s random) has a continuous distribution described by a density function <span class="math notranslate nohighlight">\(f_\Lambda: (0,1) \rightarrow \mathbb{R}^+\)</span>, meaning our random variable <span class="math notranslate nohighlight">\(\Lambda\)</span> takes on positive values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. This makes sure we can land at any spot in that interval for our value <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span> once we see enough games.</p>
+<p>e.g., 40% for 4 wins and 6 losses. But what if we observe a small number of games, and the ratio between <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(l\)</span> is extreme? We don’t presume that after we watch a player win one game that they are likely to win the rest. Instead, we assume that their skill parameter is likely close to average, perhaps a bit higher based on the result we just witnessed. So we would like to formalize that idea. Bayes suggests that instead of having a fixed parameter representing our knowledge of their skills, we instead choose a <em>prior distribution</em>, that is, create a random variable that represents our model of their skill, and update the distribution of that variable when we make observations. But how do we choose our prior? Let’s not. Let’s just suppose that <span class="math notranslate nohighlight">\(\Lambda\)</span> (now capitalized because it’s random) has a continuous distribution described by a density function <span class="math notranslate nohighlight">\(f_\Lambda: (0,1) \rightarrow \mathbb{R}^+\)</span>, meaning our random variable <span class="math notranslate nohighlight">\(\Lambda\)</span> takes on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, and can fall in any range with some positive probability. This makes sure we can land at any spot in that interval for our value <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span> once we see enough games.</p>
 </section>
 <section id="bayes-theorem">
 <h2>Bayes Theorem<a class="headerlink" href="#bayes-theorem" title="Link to this heading">#</a></h2>
@@ -562,7 +562,7 @@ f_{w,l}(x) = \frac{x^w(1-x)^l}{Z}.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ebbccefdf1b8e1eec8cdbf0b73287d2489203e835828374e04222e65f835e210.png" src="_images/ebbccefdf1b8e1eec8cdbf0b73287d2489203e835828374e04222e65f835e210.png" />
+<img alt="_images/8efd061889b1a3f4d4b80b61e4c501452ea5f50bdb36acc72e41fddf20a6063c.png" src="_images/8efd061889b1a3f4d4b80b61e4c501452ea5f50bdb36acc72e41fddf20a6063c.png" />
 </div>
 </div>
 <p>It takes time to build confidence! Even after 100 results, it looks like our estimate could range anywhere in a ~20% window based on the random results we observed. After 1000 we are starting to build some confidence, but it’s hard to quantify based on the graph alone. Remember, this is a theoretical distribution based on a single random sample, not a distribution of random results. This is the beauty of Bayesian statistics, that our posterior distribution can encode the uncertainty of our random process.</p>
@@ -692,8 +692,8 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-\hat{\lambda} &amp;= \frac{w + 0.54 * 112}{w + l + 112}\\ &amp;= \frac{\bar{\lambda} * n + 0.54 * 112}{n + 112} \\
-&amp;= 0.54 + (\bar\lambda - 0.54) * \frac{n}{n+112}.
+\hat{\lambda} &amp;= \frac{w + 0.54 \cdot 112}{w + l + 112}\\ &amp;= \frac{\bar{\lambda} n + 0.54 \cdot 112}{n + 112} \\
+&amp;= 0.54 + (\bar\lambda - 0.54) \cdot \frac{n}{n+112}.
 \end{align}
 \end{split}\]</div>
 <p>I use the last formula because it’s a bit more convenient as a one-liner. Hmm, shouldn’t we consider the effect of rank? Another exercise for the reader…</p>
