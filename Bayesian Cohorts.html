@@ -380,10 +380,6 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="inferring-win-rates-using-bayes-theorem">
 <h1>Inferring Win Rates using Bayes Theorem<a class="headerlink" href="#inferring-win-rates-using-bayes-theorem" title="Link to this heading">#</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
-<p>I want to do something a little different and write up some mathematical results related to limited analysis in complete detail. The target for this is any student of mathematics that could use their interest in Magic as a bit of extra motivation. This is university-level probability theory, but calculus students might be able to follow along with some imagination. There will be a lot of math, and a little bit of scientific programming.</p>
-<p>First, let’s set out the nature of the problem. We want to assign skill estimates to players with observed win rates that look like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -408,6 +404,10 @@
 </div>
 </div>
 </div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>I want to do something a little different and write up some mathematical results related to limited analysis in complete detail. The target for this is any student of mathematics that could use their interest in Magic as a bit of extra motivation. This is university-level probability theory, but calculus students might be able to follow along with some imagination. There will be a lot of math, and a little bit of scientific programming.</p>
+<p>First, let’s set out the nature of the problem. We want to assign skill estimates to players with observed win rates that look like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DSK&quot;</span><span class="p">,</span> <span class="s2">&quot;BLB&quot;</span><span class="p">,</span> <span class="s2">&quot;OTJ&quot;</span><span class="p">]</span>
@@ -562,7 +562,7 @@ f_{w,l}(x) = \frac{x^w(1-x)^l}{Z}.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8efd061889b1a3f4d4b80b61e4c501452ea5f50bdb36acc72e41fddf20a6063c.png" src="_images/8efd061889b1a3f4d4b80b61e4c501452ea5f50bdb36acc72e41fddf20a6063c.png" />
+<img alt="_images/ce4ec3dfb30837b63a76647b09709afd1f8986c628d569c7a99cd83bfcf215af.png" src="_images/ce4ec3dfb30837b63a76647b09709afd1f8986c628d569c7a99cd83bfcf215af.png" />
 </div>
 </div>
 <p>It takes time to build confidence! Even after 100 results, it looks like our estimate could range anywhere in a ~20% window based on the random results we observed. After 1000 we are starting to build some confidence, but it’s hard to quantify based on the graph alone. Remember, this is a theoretical distribution based on a single random sample, not a distribution of random results. This is the beauty of Bayesian statistics, that our posterior distribution can encode the uncertainty of our random process.</p>
@@ -619,7 +619,7 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
 <p>Let’s look at one bucket of users to simplify things, those with 50-100 games. We’ll assume that they played 75 games each, so the variance in their observed win rate, assuming fixed skill, should be</p>
 <div class="math notranslate nohighlight">
 \[
-\text{Var} = 0.54 \cdot 0.46 / 75 \sim 3.3 * 10^{-3}.
+\text{Var} = 0.54 \cdot 0.46 / 75 \sim 3.3 \cdot 10^{-3}.
 \]</div>
 <p>Let’s see what the sample gives us. I have a built-in function to get the pool-weighted variance of any metric, which will do fine for this. Strictly speaking, we should draft-weight, but we don’t need an exact answer here.</p>
 <div class="cell docutils container">
