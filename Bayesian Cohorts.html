@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Inferring Win Rates using Bayes Theorem &#8212; My sample book</title>
+    <title>Inferring Skill With Bayes Theorem &#8212; My sample book</title>
   
   
   
@@ -170,7 +170,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inferring Win Rates using Bayes Theorem</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inferring Skill With Bayes Theorem</a></li>
 </ul>
 
     </div>
@@ -353,7 +353,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Inferring Win Rates using Bayes Theorem</h1>
+    <h1>Inferring Skill With Bayes Theorem</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -367,6 +367,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">Bayes Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-distributions">Beta Distributions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-prior">Choosing a Prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -378,8 +379,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="inferring-win-rates-using-bayes-theorem">
-<h1>Inferring Win Rates using Bayes Theorem<a class="headerlink" href="#inferring-win-rates-using-bayes-theorem" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="inferring-skill-with-bayes-theorem">
+<h1>Inferring Skill With Bayes Theorem<a class="headerlink" href="#inferring-skill-with-bayes-theorem" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -414,19 +415,24 @@
 <span class="n">UWR</span> <span class="o">=</span> <span class="n">ColName</span><span class="o">.</span><span class="n">USER_GAME_WIN_RATE_BUCKET</span>
 <span class="n">UNG</span> <span class="o">=</span> <span class="n">ColName</span><span class="o">.</span><span class="n">USER_N_GAMES_BUCKET</span>
 <span class="n">ND</span> <span class="o">=</span> <span class="n">ColName</span><span class="o">.</span><span class="n">NUM_DRAFTS</span>
-<span class="n">df10</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="n">UWR</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
-<span class="n">df50</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="n">UWR</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="mi">50</span><span class="p">})</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df10</span><span class="p">[</span><span class="n">UWR</span><span class="p">]</span><span class="o">-</span><span class="mf">0.010</span><span class="p">,</span> <span class="n">df10</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df50</span><span class="p">[</span><span class="n">UWR</span><span class="p">]</span><span class="o">-</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">df50</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;50&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of drafts by win rate bucket for different N games cohorts&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cohort</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">]):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="n">UWR</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="n">cohort</span><span class="p">})</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">UWR</span><span class="p">]</span><span class="o">-</span><span class="mf">0.005</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">cohort</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribution of win rate for two N games cohorts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Drafts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;User Game Win Rate Bucket&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/eb638ab6830bbb067c0d81e302b40751d0195fff6ef5d0b28efbb8832e47f1fe.png" src="_images/eb638ab6830bbb067c0d81e302b40751d0195fff6ef5d0b28efbb8832e47f1fe.png" />
+<img alt="_images/531575fa605fd3226569456b8434ddf91414f57c2f206bb0348fa5c003ae178c.png" src="_images/531575fa605fd3226569456b8434ddf91414f57c2f206bb0348fa5c003ae178c.png" />
 </div>
 </div>
 <p>This might not look so bad, but we see some very extreme win rates, north of 75%. And even the not so extreme ones, do we want to lump someone that went 6-3 with someone that went 600-300? In general, we have the intuition that we need some more evidence before we assign someone a high win rate. Can we quantify that systematically? Certainly! Can we do it simply, or do we need a comprehensive theory? We can do it simply, but today we are going to look at a comprehensive theory, that happens to have a simple and intuitive result.</p>
@@ -440,7 +446,7 @@ W_n = \begin{cases} 1 &amp; \text{with probability} &amp; \lambda \\ 0 &amp; \te
 \[
 \hat\lambda = \frac{w}{w+l}.
 \]</div>
-<p>e.g., 40% for 4 wins and 6 losses. But what if we observe a small number of games, and the ratio between <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(l\)</span> is extreme? We don’t presume that after we watch a player win one game that they are likely to win the rest. Instead, we assume that their skill parameter is likely close to average, perhaps a bit higher based on the result we just witnessed. So we would like to formalize that idea. Bayes suggests that instead of having a fixed parameter representing our knowledge of their skills, we instead choose a <em>prior distribution</em>, that is, create a random variable that represents our model of their skill, and update the distribution of that variable when we make observations. But how do we choose our prior? Let’s not. Let’s just suppose that <span class="math notranslate nohighlight">\(\Lambda\)</span> (now capitalized because it’s random) has a continuous distribution described by a density function <span class="math notranslate nohighlight">\(f_\Lambda: (0,1) \rightarrow \mathbb{R}^+\)</span>, meaning our random variable <span class="math notranslate nohighlight">\(\Lambda\)</span> takes on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, and can fall in any range with some positive probability. This makes sure we can land at any spot in that interval for our value <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span> once we see enough games.</p>
+<p>e.g., 40% for 4 wins and 6 losses. But what if we observe a small number of games, and the ratio between <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(l\)</span> is extreme? We don’t presume that after we watch a player win one game that they are likely to win the rest. Instead, we assume that their skill parameter is likely close to average, perhaps a bit higher based on the result we just witnessed. So we would like to formalize that idea. Bayes suggests that instead of having a fixed parameter representing our knowledge of their skills, we instead choose a <em>prior distribution</em>, that is, create a random variable that represents our model of their skill, and update the distribution of that variable when we make observations. But how do we choose our prior? Let’s not. Let’s just suppose that <span class="math notranslate nohighlight">\(\Lambda\)</span> (now capitalized because it’s random) has a continuous distribution described by a density function <span class="math notranslate nohighlight">\(f_\Lambda: (0,1) \rightarrow \mathbb{R}^+\)</span>, meaning our random variable <span class="math notranslate nohighlight">\(\Lambda\)</span> takes on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, and can fall in any range with some positive probability. This makes sure we can land at any spot in that interval for our value <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span> once we see enough games.</p>
 </section>
 <section id="bayes-theorem">
 <h2>Bayes Theorem<a class="headerlink" href="#bayes-theorem" title="Link to this heading">#</a></h2>
@@ -467,7 +473,7 @@ W_n = \begin{cases} 1 &amp; \text{with probability} &amp; \lambda \\ 0 &amp; \te
 \[
 \mathbf{P}(W) = \mathbf{P}(\Lambda).
 \]</div>
-<p>You’re used to seeing an <span class="math notranslate nohighlight">\(\mathbf{E}\)</span> here, for expectation, but I learned probability from an edgelord so I do it this way. It’s just an integral sign anyway:</p>
+<p>You’re used to seeing an <span class="math notranslate nohighlight">\(\mathbf{E}\)</span> here, for expectation, but I learned probability from an maverick so I do it this way. It’s just an integral sign anyway:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{P}(\Lambda) = \int_0^1{xf_\Lambda(x)dx}.
@@ -533,13 +539,15 @@ f_{w,l}(x) = \frac{x^w(1-x)^l}{Z}.
     <span class="n">f</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;After result </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Bayesian estimates of skill parameter&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Parameter Space&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability Density&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1e435812ddcfe36a8b626fb24d749dbe5d5e35e9562c368c96037d864e63e803.png" src="_images/1e435812ddcfe36a8b626fb24d749dbe5d5e35e9562c368c96037d864e63e803.png" />
+<img alt="_images/f0cb129dcc0d6d93951969c02bd8c00e8e6bb3fa66a83f6159c58c9448340528.png" src="_images/f0cb129dcc0d6d93951969c02bd8c00e8e6bb3fa66a83f6159c58c9448340528.png" />
 </div>
 </div>
 <p>After the second result, the green line, it looks like we’re leaning towards a skill parameter of <span class="math notranslate nohighlight">\(1.0\)</span>. While that’s not realistic in real life, remember that our prior likes <span class="math notranslate nohighlight">\(1.0\)</span> just as much as any other number, so it makes sense that we lean that way after a series of wins. A few wins and losses, and we are starting to get something with a centered shape. Let’s look at a few for larger random samples.</p>
@@ -555,14 +563,16 @@ f_{w,l}(x) = \frac{x^w(1-x)^l}{Z}.
         <span class="n">f</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Distribution after </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> random results&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distributions for random results with a true skill parameter of </span><span class="si">{</span><span class="n">lam</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Bayesian estimates of skill parameter with a true value of 0.54&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Parameter Space&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability Density&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ce4ec3dfb30837b63a76647b09709afd1f8986c628d569c7a99cd83bfcf215af.png" src="_images/ce4ec3dfb30837b63a76647b09709afd1f8986c628d569c7a99cd83bfcf215af.png" />
+<img alt="_images/85f7cffbc98d8612aad4f18059d158fd4b00d0655cfe30c194c544b3ae6cf1b6.png" src="_images/85f7cffbc98d8612aad4f18059d158fd4b00d0655cfe30c194c544b3ae6cf1b6.png" />
 </div>
 </div>
 <p>It takes time to build confidence! Even after 100 results, it looks like our estimate could range anywhere in a ~20% window based on the random results we observed. After 1000 we are starting to build some confidence, but it’s hard to quantify based on the graph alone. Remember, this is a theoretical distribution based on a single random sample, not a distribution of random results. This is the beauty of Bayesian statistics, that our posterior distribution can encode the uncertainty of our random process.</p>
@@ -667,7 +677,7 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
 <ul class="simple">
 <li><p>For the uniform distribution (<span class="math notranslate nohighlight">\(w = l = 0\)</span>), we should get <span class="math notranslate nohighlight">\(\int_{-1/2}^{1/2}x^2dx = 1/12\)</span>. Check.</p></li>
 <li><p>It should scale like <span class="math notranslate nohighlight">\(1/n\)</span>, since it represents our uncertainty after <span class="math notranslate nohighlight">\(n\)</span> observations. Check.</p></li>
-<li><p><span class="math notranslate nohighlight">\(n * \text{Var}\)</span> should converge to <span class="math notranslate nohighlight">\(\lambda * (1-\lambda\)</span>) for large <span class="math notranslate nohighlight">\(n\)</span>. Also check.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n \text{Var}(\Lambda)\)</span> should converge to <span class="math notranslate nohighlight">\(\lambda (1-\lambda\)</span>) for large <span class="math notranslate nohighlight">\(n\)</span>. Also check.</p></li>
 </ul>
 <p>The reasons for this I will leave as an excercise! But we have a formula, so we can convert our variance to a sample size. Solve</p>
 <div class="math notranslate nohighlight">
@@ -707,27 +717,31 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
     <span class="s1">&#39;bayes_wr&#39;</span><span class="p">:</span> <span class="n">ColSpec</span><span class="p">(</span>
         <span class="n">col_type</span><span class="o">=</span><span class="n">ColType</span><span class="o">.</span><span class="n">GROUP_BY</span><span class="p">,</span>
         <span class="n">expr</span><span class="o">=</span><span class="p">((</span><span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">1200</span><span class="o">/</span><span class="p">(</span><span class="mi">1200</span> <span class="o">+</span> <span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">750</span><span class="o">/</span><span class="p">(</span><span class="mi">750</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">300</span><span class="o">/</span><span class="p">(</span><span class="mi">300</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">75</span><span class="o">/</span><span class="p">(</span><span class="mi">75</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">30</span><span class="o">/</span><span class="p">(</span><span class="mi">30</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="mi">0</span><span class="p">)))))</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">700</span><span class="o">/</span><span class="p">(</span><span class="mi">700</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">250</span><span class="o">/</span><span class="p">(</span><span class="mi">250</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">70</span><span class="o">/</span><span class="p">(</span><span class="mi">70</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UNG</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="mi">25</span><span class="o">/</span><span class="p">(</span><span class="mi">25</span><span class="o">+</span><span class="n">BAYES_N</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="mi">0</span><span class="p">)))))</span>
                 <span class="o">*</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">UWR</span><span class="p">)</span> <span class="o">-</span> <span class="n">BAYES_MU</span><span class="p">)</span> <span class="o">+</span> <span class="n">BAYES_MU</span><span class="p">)</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span> <span class="o">/</span> <span class="mi">50</span>
     <span class="p">),</span>
 <span class="p">}</span>
 
-<span class="n">df10</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">extensions</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
-<span class="n">df50</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">extensions</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cohort</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">]):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="n">cohort</span><span class="p">},</span> <span class="n">extensions</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">]</span><span class="o">-</span><span class="mf">0.004</span> <span class="o">+</span> <span class="mf">0.008</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.008</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">cohort</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df10</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">]</span><span class="o">-</span><span class="mf">0.010</span><span class="p">,</span> <span class="n">df10</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df50</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">]</span><span class="o">-</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">df50</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;50&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of drafts by Bayes win rate bucket for different N games cohorts&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.42</span><span class="p">,</span> <span class="mf">0.66</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribution of Bayes win rate for two N games cohorts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Drafts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Bayes Win Rate&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e12ca257a24bd7e7a27c2c6b7baeb4ff5ddc650cf2dd3537f02f3257a13cabdc.png" src="_images/e12ca257a24bd7e7a27c2c6b7baeb4ff5ddc650cf2dd3537f02f3257a13cabdc.png" />
+<img alt="_images/91b701b3b619c58b89ec693bf958e456bbe7477c7adace7ee31fb2d4230954e0.png" src="_images/91b701b3b619c58b89ec693bf958e456bbe7477c7adace7ee31fb2d4230954e0.png" />
 </div>
 </div>
 <p>This looks much nicer! We have fewer groups with a more reasonable distribution, and we can observe more confidence in higher skill for some of the players with more reps. Let’s add a few more buckets to see the big picture.</p>
@@ -735,22 +749,33 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prop</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">],</span> <span class="n">extensions</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="n">ND</span><span class="p">:</span> <span class="s1">&#39;_&#39;</span><span class="p">})</span>
 
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cohort</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]):</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">summon</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">group_by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">],</span> <span class="n">filter_spec</span><span class="o">=</span><span class="p">{</span><span class="n">UNG</span><span class="p">:</span> <span class="n">cohort</span><span class="p">},</span> <span class="n">extensions</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">]</span><span class="o">-</span><span class="mf">0.02</span> <span class="o">*</span> <span class="n">i</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.02</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">cohort</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of drafts by Bayes win rate bucket for different N games cohorts&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bayes_wr&#39;</span><span class="p">]</span><span class="o">-</span><span class="mf">0.02</span> <span class="o">*</span> <span class="n">i</span><span class="o">/</span><span class="mi">5</span> <span class="o">+</span> <span class="mf">0.004</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">ND</span><span class="p">],</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.02</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">cohort</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.34</span><span class="p">,</span> <span class="mf">0.74</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Drafts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Bayes Win Rate&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribution of Bayes win rate for several N games cohorts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/69cf55c997caf1009d9726558a0ac7c472eb24a0d91e30d1ac93ee7620977183.png" src="_images/69cf55c997caf1009d9726558a0ac7c472eb24a0d91e30d1ac93ee7620977183.png" />
+<img alt="_images/41cdbc79d3ab9033bb91a9917bb760fcd5e342815330e84dfdf63050da6f89ae.png" src="_images/41cdbc79d3ab9033bb91a9917bb760fcd5e342815330e84dfdf63050da6f89ae.png" />
 </div>
 </div>
-<p>Looks pretty good! Although that bimodal bit is pretty weird. I wonder what’s going on there…</p>
+<p>Looks pretty good! The shapes for the different cohorts at least look similar. Although that bimodal bit is pretty weird. I wonder what’s going on there…</p>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>We’ve come up with a nice way to map our records to skill estimates of the players producing the data. There are a couple ways we could use that skill estimate that could lead to better analysis. First, when interpreting card winrates, the skill of the player who chose the card is an important source of bias. We want to estimate how we might perform with the card, not find out how good the player was that picked it. An accurate skill estimate could allows to correct for that bias.</p>
+<p>Second, we can learn from the choices of skilled players. If we are training a model or evaluating choices driven by a quantitative factor, we can ask how players at different skill levels made choices in a similar situation and use that to inform our model. Ultimately, player skill drives game outcomes as much or more than any given data point, so estimating it accurately is necessary for improving the quality of our analytics.</p>
 </section>
 </section>
 
@@ -814,6 +839,7 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">Bayes Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-distributions">Beta Distributions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-prior">Choosing a Prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 
