@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Inferring Skill With Bayes Theorem &#8212; My sample book</title>
+    <title>Inferring Skill With Bayes Theorem &#8212; Spells Documentation</title>
   
   
   
@@ -65,7 +65,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Bayesian Cohorts';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+    <link rel="prev" title="Welcome to Spells" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -147,8 +147,8 @@
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+    <img src="_static/spells.png" class="logo__image only-light" alt="Spells Documentation - Home"/>
+    <img src="_static/spells.png" class="logo__image only-dark pst-js-only" alt="Spells Documentation - Home"/>
   
   
 </a></div>
@@ -165,7 +165,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Welcome to Spells
                 </a>
             </li>
         </ul>
@@ -217,53 +217,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FBayesian Cohorts.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -487,7 +440,7 @@ W_n = \begin{cases} 1 &amp; \text{with probability} &amp; \lambda \\ 0 &amp; \te
 <p>Let’s start giving out distributions names, let’s identify them by the number of wins and losses observed, like this:</p>
 <div class="math notranslate nohighlight">
 \[
-f_{1,0}(x) = \frac{xf_{0,0}(x)}{\int_0^1{xf_{0,0}dx}}.
+f_{1,0}(x) = \frac{xf_{0,0}(x)}{\int_0^1{xf_{0,0}(x)dx}}.
 \]</div>
 <p>We divided out the <span class="math notranslate nohighlight">\(dx\)</span>, we didn’t forget it.</p>
 <p>The denominator is going to start getting annoying, so I’m just going to leave it out and use a <span class="math notranslate nohighlight">\(\sim\)</span> symbol to denote proportionality. Go back and repeat the argument with a loss, and we get the formula</p>
@@ -572,7 +525,7 @@ f_{w,l}(x) = \frac{x^w(1-x)^l}{Z}.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/85f7cffbc98d8612aad4f18059d158fd4b00d0655cfe30c194c544b3ae6cf1b6.png" src="_images/85f7cffbc98d8612aad4f18059d158fd4b00d0655cfe30c194c544b3ae6cf1b6.png" />
+<img alt="_images/0225f8a51598548be5b9f360ee81a424515816f8d687176d5e040c0f1f49984f.png" src="_images/0225f8a51598548be5b9f360ee81a424515816f8d687176d5e040c0f1f49984f.png" />
 </div>
 </div>
 <p>It takes time to build confidence! Even after 100 results, it looks like our estimate could range anywhere in a ~20% window based on the random results we observed. After 1000 we are starting to build some confidence, but it’s hard to quantify based on the graph alone. Remember, this is a theoretical distribution based on a single random sample, not a distribution of random results. This is the beauty of Bayesian statistics, that our posterior distribution can encode the uncertainty of our random process.</p>
@@ -815,7 +768,7 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Welcome to your Jupyter Book</p>
+        <p class="prev-next-title">Welcome to Spells</p>
       </div>
     </a>
 </div>
@@ -854,7 +807,7 @@ dv &amp;= x^k &amp; v &amp;= \frac{1}{k+1}x^{k+1}.\\
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By Joel Barnes
 </p>
 
   </div>
